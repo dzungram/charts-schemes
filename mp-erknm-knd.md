@@ -2,32 +2,6 @@
 
 ```mermaid
 ---
-config:
-    theme: neutral
----
-
-flowchart TB
-
-A[fa:fa-user Инспектор ]
-A-- Создает новую карточку КНМ -->D
-A-- Создает новую карточку КНМ -->B
-
-subgraph ЕРКНМ
-direction TB
-    B[Карточка КНМ, ПМ]-->C[Номер ЕРКНМ]
-end
-
-subgraph Приложение
-direction TB
-    D[Карточка КНМ, ПМ]-->E
-end
-
-C-->D
-
-```
-
-```mermaid
----
 title: Sequence diagram
 ---
 
