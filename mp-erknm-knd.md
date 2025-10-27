@@ -2,21 +2,54 @@
 
 ```mermaid
 ---
-title: Схема взаимодействия приложения "Мобильный инспектор" и ЕРКНМ
+config:
+    theme: neutral
 ---
 
-flowchart TD
+flowchart TB
 
-C -- <i class="fa fa-plus"></i> Создает карточку КНМ, ПМ --> B[fa:fa-desktop ЕРКНМ]
+A[fa:fa-user Инспектор ]
+A-- Создает новую карточку КНМ -->D
+A-- Создает новую карточку КНМ -->B
 
-C[fa:fa-user Инспектор] -- <i class="fa fa-plus"></i> Создает карточку КНМ, ПМ --> A[fa:fa-mobile Мобильный инспектор]
+subgraph ЕРКНМ
+direction TB
+    B[Карточка КНМ, ПМ]-->C[Номер ЕРКНМ]
+end
 
+subgraph Приложение
+direction TB
+    D[Карточка КНМ, ПМ]-->E
+end
 
-B -- <i class="fa fa-pencil"></i> Вносит номер ЕРКНМ --> A
-A -- <i class="fa fa-video-camera"></i> Подключается --> E[fa:fa-video-camera ВКС]
-F[fa:fa-user Контролируемое лицо]
-A -- <i class="fa fa-envelope"></i> Отправляет ссылку на ВКС --> F
-F -- <i class="fa fa-file"></i> Подключается, предоставляет необходимые документы --> E
-E -- <i class="fa fa-pencil"></i> Оформляет по итогам ВКС --> G[Результаты проверки]
-G -- <i class="fa fa-pencil"></i> Дублирует результаты в ЕРКНМ --> B
+C-->D
+
+```
+
+```mermaid
+---
+title: Sequence diagram
+---
+
+sequenceDiagram
+    participant Пользователь as User
+    participant СистемаАвторизации as AuthSystem
+    participant ОсновнаяСистема as MainSystem
+
+    Note over User: Начинает процесс входа
+
+    User->>AuthSystem: Отправляет логин и пароль
+    activate AuthSystem
+    AuthSystem-->>User: Возвращает токен аутентификации
+    deactivate AuthSystem
+
+    User->>MainSystem: Передаёт токен вместе с запросом
+    activate MainSystem
+    alt Токен действителен
+        MainSystem-->>User: Обрабатывает запрос успешно
+    else Токен недействителен
+        MainSystem-->>User: Возвращает ошибку аутентификации
+    end
+    deactivate MainSystem
+
 ```
