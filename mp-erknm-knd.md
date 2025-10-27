@@ -27,3 +27,24 @@ sequenceDiagram
     deactivate MainSystem
 
 ```
+
+## knd
+
+```mermaid
+---
+title: Взаимодействие с контролируемым лицом
+config:
+    theme: default
+---
+sequenceDiagram
+        
+    box
+        actor Inspector as Инспектор
+        actor Organization as Контролируемое лицо
+    end
+    Inspector->>Organization: Уведомление о проведении проверки в дистанционном формате
+    activate Organization
+        Organization-->>Inspector: Подтверждение участия
+        Inspector->>Organization: Ссылка на мероприятие
+    deactivate Organization
+```
